@@ -14,9 +14,6 @@ mongoose.connect(`${process.env.DBHOST}://${process.env.DBUSER}:${process.env.DB
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_KEY));
 
-const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || 3000;
-
 app.get('/', (req, res) => {
   res.status(201).send({ msg: 'Hello!'});
 });
@@ -25,6 +22,12 @@ app.get('/users/:name', (req, res) => {
   return res.status(201).send({ msg: 'Hello!'});
 });
 
-app.listen(PORT, HOST, () => {
-  console.log(`Server running at http://${HOST}:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  const HOST = process.env.HOST || 'localhost';
+  const PORT = process.env.PORT || 3000; 
+  app.listen(PORT, HOST, () => {
+    console.log(`Server running at http://${HOST}:${PORT}`);
+  });
+}
+
+export default app;
