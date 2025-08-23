@@ -2,6 +2,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 
+import routes from './routes/index.mjs';
+
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -13,13 +15,10 @@ mongoose.connect(`${process.env.DBHOST}://${process.env.DBUSER}:${process.env.DB
 
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_KEY));
+app.use(routes);
 
 app.get('/', (req, res) => {
   res.status(201).send({ msg: 'Hello!'});
-});
-
-app.get('/users/:name', (req, res) => {
-  return res.status(201).send({ msg: 'Hello!'});
 });
 
 if (process.env.NODE_ENV !== 'production') {
