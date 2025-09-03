@@ -68,4 +68,20 @@ const updateNoteById = async (req, res) => {
   }
 };
 
-export { createNote, getAllNotes, getNoteById, updateNoteById };
+const deleteNoteById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.session.user._id;
+    const noteCheck = await Note.findOne({ _id: id, userId });
+    const note = await Note.findByIdAndDelete(id);
+
+    if (!note) return res.status(404).send({ message: 'Note not found'});
+    if (!noteCheck) return res.status(403).send({ message: 'Forbidden: Note is not yours'});
+
+    return res.send({ message: 'Successfully note deleted', note: note.id});
+  } catch (error) {
+    return res.status(400).send({ error: error.message });
+  }
+};
+
+export { createNote, getAllNotes, getNoteById, updateNoteById, deleteNoteById };
