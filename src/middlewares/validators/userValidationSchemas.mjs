@@ -1,5 +1,4 @@
 import { validationResult } from 'express-validator';
-import fs from 'fs';
 import { deleteImage } from '../../utils/helpers.mjs';
 
 export const userValidationSchema = {

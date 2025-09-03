@@ -27,9 +27,9 @@ const createUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
-    res.status(200).send(users);
+    return res.status(200).send(users);
   } catch (error) {
-    res.status(500).send({ error: 'failed to fetch data' });
+    return res.status(500).send({ error: 'failed to fetch data' });
   }
 };
 
@@ -40,9 +40,9 @@ const getUser = async (req, res) => {
 
     if (!user) return res.status(404).send({ message: 'User not found'});
 
-    res.send(user);
+    return res.send(user);
   } catch (error) {
-    res.status(500).send({ error: error.message});
+    return res.status(500).send({ error: error.message});
   }
 };
 
@@ -60,7 +60,7 @@ const updateUser = async (req, res) => {
       
       comparePassword(data.password, user.password) ? updateData.password = hashPassword(data.newPassword) : res.status(400).send({ message: 'Failed Update, Wrong Password Try Again.'});
     } else if (data.password || data.newPassword) {
-      res.status(400).send({ message: 'Failed Update, Password and newPassword are both required!'});
+      return res.status(400).send({ message: 'Failed Update, Password and newPassword are both required!'});
     }
     
     if (data.fullName) updateData.fullName = data.fullName;
@@ -80,10 +80,10 @@ const updateUser = async (req, res) => {
     
     if (!userUpdate) return res.status(404).send({ message: 'User not found!.'});
 
-    res.status(200).send({ message: 'Successfully updated', data: userUpdate});
+    return res.status(200).send({ message: 'Successfully updated', data: userUpdate});
   } catch (error) {
     console.log(error);
-    res.status(400).send({ error: error.message});
+    return res.status(400).send({ error: error.message});
   }
 };
 
@@ -94,9 +94,9 @@ const deleteUser = async (req, res) => {
 
     if (!user) return res.status(404).send({ message: 'User not found!'})
 
-    res.send({ message: 'Successfully deleted', user: user.id });
+    return res.send({ message: 'Successfully deleted', user: user.id });
   } catch (error) {
-    res.status(400).send({ error: error.message });
+    return res.status(400).send({ error: error.message });
   }
 };
 

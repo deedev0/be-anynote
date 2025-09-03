@@ -5,6 +5,11 @@ import mongoose from 'mongoose';
 import routes from './routes/index.mjs';
 
 import dotenv from 'dotenv';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import passport from 'passport';
+import './strategies/local-strategy.mjs';
+
 dotenv.config();
 
 const app = express();
@@ -15,6 +20,21 @@ mongoose.connect(`${process.env.DBHOST}://${process.env.DBUSER}:${process.env.DB
 
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_KEY));
+app.use(session({
+  secret: process.env.SESSION_KEY,
+  saveUninitialized:false,
+  resave: false,
+  cookie: {
+    maxAge: 60000 * 60
+  },
+  store: MongoStore.create({
+    client: mongoose.connection.getClient(),
+  }),
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(routes);
 
 app.get('/', (req, res) => {
