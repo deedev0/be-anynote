@@ -46,7 +46,7 @@ app.use(passport.session());
 app.use(routes);
 
 app.get('/', (req, res) => {
-  res.status(201).send({ msg: 'Hello!'});
+  res.status(201).send({ msg: 'Hello New!'});
 });
 
 if (process.env.NODE_ENV !== 'production') {
