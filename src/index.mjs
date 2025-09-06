@@ -2,6 +2,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 
+import cors from 'cors';
+
 import routes from './routes/index.mjs';
 
 import dotenv from 'dotenv';
@@ -19,6 +21,12 @@ mongoose.connect(`${process.env.DBHOST}://${process.env.DBUSER}:${process.env.DB
   .catch((err) => console.log(`Error: ${err}`));
 
 app.use(express.json());
+
+app.use(cors({
+  origin: "http://localhost:5173", 
+  credentials: true,               
+}));
+
 app.use(cookieParser(process.env.COOKIE_KEY));
 app.use(session({
   secret: process.env.SESSION_KEY,
