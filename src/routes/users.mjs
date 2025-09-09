@@ -8,10 +8,12 @@ import { checkAuthorizationUser } from '../middlewares/auth/checkAuthorization.m
 
 const router = Router();
 
-router.post('/api/users', upload.single('image'), checkSchema(userValidationSchema), validate, createUser);
+router.post('/api/users', checkSchema(userValidationSchema), validate, createUser);
+// router.post('/api/users', upload.single('image'), checkSchema(userValidationSchema), validate, createUser);
 router.get('/api/users', getAllUsers);
 router.get('/api/users/:id', getUser);
-router.patch('/api/users/:id', checkAuthentication, checkAuthorizationUser, upload.single('image'), checkSchema(userPatchValidationSchema), validate, updateUser);
+router.patch('/api/users/:id', checkAuthentication, checkAuthorizationUser, checkSchema(userPatchValidationSchema), validate, updateUser);
+// router.patch('/api/users/:id', checkAuthentication, checkAuthorizationUser, upload.single('image'), checkSchema(userPatchValidationSchema), validate, updateUser);
 router.delete('/api/users/:id', checkAuthentication, checkAuthorizationUser, deleteUser);
 
 export default router;
