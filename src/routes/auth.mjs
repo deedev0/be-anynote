@@ -15,7 +15,7 @@ router.post('/api/auth', async (req, res) => {
   return res.status(200).send(findUser);
 });
 
-router.get('/api/auth/status', checkAuthentication, (req, res) => {return res.status(200).send({ message: 'Authenticated', data: req.session.user })});
+router.get('/api/auth/status', checkAuthentication, (req, res) => {console.log(req.session.user); return res.status(200).send({ message: 'Authenticated', data: req.session.user })});
 
 router.post('/api/auth/logout', checkAuthentication, (req, res) => {
   req.logout(err => {
