@@ -23,7 +23,7 @@ mongoose.connect(`${process.env.DBHOST}://${process.env.DBUSER}:${process.env.DB
 app.use(express.json());
 
 app.use(cors({
-  origin: '*', 
+  origin: ['http://localhost:5173', 'http://36.94.68.175:3001', 'http://10.10.10.1:8080'], 
   credentials: true,               
 }));
 
