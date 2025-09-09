@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { checkSchema } from 'express-validator';
 import { userValidationSchema, userPatchValidationSchema, validate } from '../middlewares/validators/userValidationSchemas.mjs';
-import { upload } from '../middlewares/upload.mjs';
 import { createUser, deleteUser, getAllUsers, getUser, updateUser } from '../controllers/userController.mjs';
 import { checkAuthentication } from '../middlewares/auth/checkAuthentication.mjs';
 import { checkAuthorizationUser } from '../middlewares/auth/checkAuthorization.mjs';
